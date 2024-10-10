@@ -47,8 +47,8 @@ class TelegramAPI
             $this->last_name = $this->response['message']['from']['last_name'] ?? null;
             $this->username = $this->response['message']['from']['username'] ?? null;
             $this->text = $this->response['message']['text'] ?? null;
-            $this->is_bot = $this->response['message']['from']['is_bot']  ?? 0;
-            $this->is_permium = $this->response['message']['from']['is_permium'] ?? 0;
+            $this->is_bot = $this->response['message']['from']['is_bot'] == true ? 1 : 0;
+            $this->is_permium = $this->response['message']['from']['is_permium'] == true ? 1 : 0;
             $this->media_group_id = $this->response['message']['media_group_id'] ?? null;
 
             //photo

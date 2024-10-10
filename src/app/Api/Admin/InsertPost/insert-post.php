@@ -1,8 +1,8 @@
 <?php
 
-preg_match_all("/https:\/\/t\.me\/[^\s)]+/", $text, $matches);
+preg_match_all("/https:\/\/t\.me\/[^\s)]+/", $telegramApi->getText(), $matches);
 
-if ($matches[0][0]) {
+if ($matches[0]) {
     foreach ($matches[0] as $link) {
         $queries = $explodes = explode("&", explode("?", $link)[1]);
         $server = explode("=", $queries[0])[1] ?? null;

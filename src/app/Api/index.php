@@ -18,7 +18,8 @@ $user = $sql->table('users')->select()->where('user_id', $telegramApi->getUser_i
 $userStep = $user['step'];
 // include some folder
 
+include_once('User/user-panel.php');
 if ($user['is_admin'] == 1) {
-    include_once('InsertPost/insert-post.php');
-    include_once("SelectPost/select-post.php");
+    include_once('Admin/InsertPost/insert-post.php');
+    include_once("Admin/SelectPost/select-post.php");
 }
