@@ -16,6 +16,6 @@ if ($matches[0]) {
         $secret = explode("=", $queries[2])[1] ?? null;
         $sql->table('proxies')->insert(['link', 'status', 'port', 'server', 'secret', 'added_by_user_id'], [$link, 0, $port, $server, $secret, $user['id']]);
     }
-
-    $telegramApi->sendMessage('با موفقیت اضافه شد .');
+    $text = "به تعداد " . count($matches[0]) . " ثبت شد .";
+    $telegramApi->sendMessage($text);
 }

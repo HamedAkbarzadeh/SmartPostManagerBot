@@ -15,13 +15,14 @@ if (strpos($telegramApi->getText(), 'sendPost_') === 0) {
             
             🆔 @PHarseProxy 🫧";
             $telegramApi->sendMessage($text, null, CHANNEL_ID, null);
-            $text = "* با موفقیت ارسال شد *";
-
-            $telegramApi->sendMessage($text, null, null, null, "MarkdownV2");
-
+           
             $timestmp = time();
             $sql->table('proxies')->where('id', $proxy['id'])->update(['status', 'used_at'], [1, date("Y-m-d H:i:s", $timestmp)]);
         }
+        $text = "تعداد ". count($proxies) ." ارسال شد";
+
+        $telegramApi->sendMessage($text, null, null, null, "MarkdownV2");
+
     } else {
         $text = "هیچ پست فعالی برای ارسال موجود نیست .";
         $telegramApi->sendMessage($text);
