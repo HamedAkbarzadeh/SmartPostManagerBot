@@ -200,7 +200,7 @@ class DB
     {
 
         if (in_array('limit', $this->allowMethods)) {
-            $this->limit = ' limit ' . $count;
+            $this->limit = ' LIMIT ' . $count;
             $this->allowMethods = ['get', 'first'];
 
             return $this;
@@ -235,14 +235,14 @@ class DB
     {
         try {
             if (!empty($this->values)) {
-                $fullSql = $this->sql . " " . $this->orderByProperty . " " . $this->limit;
+                $fullSql = $this->sql . " " . $this->orderByProperty;
                 if ($this->wheres != "") {
-                    $fullSql .= " WHERE " . $this->wheres;
+                    $fullSql .= " WHERE " . $this->wheres . " " . $this->limit;
                 }
                 $stmt = DBConnection::getInstance()->prepare($fullSql);
                 $stmt->execute($this->values);
             } else {
-                $fullSql = $this->sql . $this->orderByProperty;
+                $fullSql = $this->sql . $this->orderByProperty . " " . $this->limit;
                 $stmt = DBConnection::getInstance()->query($fullSql);
             }
             $this->default();
