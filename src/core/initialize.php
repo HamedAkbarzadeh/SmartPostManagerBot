@@ -12,7 +12,7 @@ if (!defined("BOT_NAME")) {
     define('BOT_NAME', 'PHarse Proxy');
 }
 if (!defined('CHANNEL_ID')) {
-    define('CHANNEL_ID', " -1002300025191");
+    define('CHANNEL_ID', "-1002300025191");
 }
 if (!defined("CHANNEL_USERNAME")) {
     define('CHANNEL_USERNAME', "https://t.me/PharseProxy");
