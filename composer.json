@@ -1,0 +1,24 @@
+{
+    "name": "hmd/event-bot",
+    "description": "This bot for telegram airdrop",
+    "type": "project",
+    "require": {
+        "guzzlehttp/guzzle": "^7.9",
+        "monolog/monolog": "^3.7",
+        "morilog/jalali": "3.*"
+    },
+    "autoload": {
+        "files": [
+            "src/app/Helpers/helpers.php"
+        ],
+        "psr-4": {
+            "src\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Hamed Akbarzadeh",
+            "email": "h.akbarzadh@gmail.com"
+        }
+    ]
+}
