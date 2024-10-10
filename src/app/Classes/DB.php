@@ -15,6 +15,7 @@ class DB
     private $sql = "";
     private $values = [];
     private $wheres = "";
+    private $limit = "";
     private $orderByProperty = "";
     private $allowMethods = ['table'];
     private $callSelect = false;
@@ -161,7 +162,7 @@ class DB
                 $this->wheres .= $startWhere . $column . " $condition ? ";
                 $this->values[] = $value;
             }
-            $this->allowMethods = ['where', 'orWhere', 'orderBy', 'get', 'first', 'update', 'delete'];
+            $this->allowMethods = ['limit', 'where', 'orWhere', 'orderBy', 'get', 'first', 'update', 'delete'];
             return $this;
         }
         // $this->setLog("Order By Eror", "../Log/DB.log", 'EMERGENCY');
@@ -179,7 +180,7 @@ class DB
                 $this->wheres .= $startOrWhere . $columsn . " $condition ?";
             }
             $this->values[] = $values;
-            $this->allowMethods = ['where', 'orWhere', 'orderBy', 'get', 'first', 'update', 'delete'];
+            $this->allowMethods = ['limit', 'where', 'orWhere', 'orderBy', 'get', 'first', 'update', 'delete'];
             return $this;
         }
         return false;
@@ -188,6 +189,18 @@ class DB
     {
         if (in_array('orderBy', $this->allowMethods)) {
             $this->orderByProperty = ' ORDER BY ' . $column . " " . $asc;
+            $this->allowMethods = ['limit', 'get', 'first'];
+
+            return $this;
+        }
+        // $this->setLog("Where Eror", "../Log/DB.log", 'EMERGENCY');
+        return false;
+    }
+    public function limit($count)
+    {
+
+        if (in_array('limit', $this->allowMethods)) {
+            $this->limit = ' limit ' . $count;
             $this->allowMethods = ['get', 'first'];
 
             return $this;
@@ -222,7 +235,7 @@ class DB
     {
         try {
             if (!empty($this->values)) {
-                $fullSql = $this->sql . " " . $this->orderByProperty;
+                $fullSql = $this->sql . " " . $this->orderByProperty . " " . $this->limit;
                 if ($this->wheres != "") {
                     $fullSql .= " WHERE " . $this->wheres;
                 }

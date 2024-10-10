@@ -175,10 +175,13 @@ class TelegramAPI
     {
         return $this->response;
     }
-    public function sendMessage($text, $reply_markup = null, $reply_to_message_id = null, $parse_mode = null)
+    public function sendMessage($text, $reply_markup = null, $chat_id = null, $reply_to_message_id = null, $parse_mode = null)
     {
+        if (!$chat_id) {
+            $chat_id = $this->chat_id;
+        }
         $params = [
-            'chat_id' => $this->chat_id,
+            'chat_id' => $chat_id,
             'text' => $text,
         ];
 

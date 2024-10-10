@@ -57,7 +57,7 @@ if (strpos($telegramApi->getText(), '/start') === 0) {
             ]
         ];
     } else {
-        $text = "به ربات " . BOT_NAME . " خوش آمدید . جهت ورود به کانال به لینک زیر مراجعه نمایید" . PHP_EOL . CHANNEL_ID;
+        $text = "به ربات " . BOT_NAME . " خوش آمدید . جهت ورود به کانال به لینک زیر مراجعه نمایید" . PHP_EOL . CHANNEL_USERNAME;
     }
 
     $telegramApi->sendMessage($text, $reply_markup);
