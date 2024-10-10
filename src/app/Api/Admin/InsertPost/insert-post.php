@@ -1,7 +1,13 @@
 <?php
 
 preg_match_all("/https:\/\/t\.me\/[^\s)]+/", $telegramApi->getText(), $matches);
-
+if (isset($telegramApi->getEntities()[0])) {
+    foreach ($telegramApi->getEntities() as $entitie) {
+        if ($entitie['type'] == 'text_link') {
+            $matches[0][] = $entitie['url'];
+        }
+    }
+}
 if ($matches[0]) {
     foreach ($matches[0] as $link) {
         $queries = $explodes = explode("&", explode("?", $link)[1]);

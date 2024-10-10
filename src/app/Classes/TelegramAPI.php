@@ -31,6 +31,7 @@ class TelegramAPI
 
     public $is_bot;
     public $is_permium;
+    public $entities;
     public $invite_link;
     public function __construct()
     {
@@ -50,7 +51,7 @@ class TelegramAPI
             $this->is_bot = $this->response['message']['from']['is_bot'] == true ? 1 : 0;
             $this->is_permium = $this->response['message']['from']['is_permium'] == true ? 1 : 0;
             $this->media_group_id = $this->response['message']['media_group_id'] ?? null;
-
+            $this->entities = $this->response['message']['entities'] ?? null;
             //photo
             if (isset($this->response['message']['photo'])) {
                 $this->file_id = end($this->response['message']['photo'])['file_id'] ?? null;
@@ -90,6 +91,10 @@ class TelegramAPI
         return $this->user_id;
     }
 
+    public function getEntities()
+    {
+        return $this->entities;
+    }
     public function getChat_id()
     {
         return $this->chat_id;
