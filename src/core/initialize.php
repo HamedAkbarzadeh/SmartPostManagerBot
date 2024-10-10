@@ -8,6 +8,12 @@ if (!defined("TOKEN")) {
 if (!defined("DOMAIN")) {
     define('DOMAIN', '');
 }
+if (!defined("BOT_NAME")) {
+    define('BOT_NAME', 'PHarse Proxy');
+}
+if (!defined('CHANNEL_ID')) {
+    define('CHANNEL_ID', "https://t.me/PharseProxy");
+}
 if (!defined('API')) {
     define('API', "https://api.telegram.org/bot" . TOKEN . "/");
 }
