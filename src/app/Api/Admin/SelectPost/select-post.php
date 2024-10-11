@@ -11,8 +11,7 @@ if (strpos($telegramApi->getText(), 'sendPost_') === 0) {
             $footer2 = "✳️  ری اکشن یادتون نره ";
             $channelLink = "🆔 @PHarseProxy 🫧";
             $link = $proxy["link"];
-            // $text = "*$title*" . PHP_EOL . "[".$proxy["link"]."](".$proxy["link"].")" . PHP_EOL . ">$footer" . PHP_EOL . "$channelLink";
-            $text = "<b>$title</b>\n$link\n$footer\n\n$footer2\n$channelLink";
+            $text = "<b>$title</b>\n\n$link\n\n$footer\n$footer2\n\n$channelLink";
             $telegramApi->sendMessage($text, null, CHANNEL_ID, null, "HTML");
 
             $timestmp = time();
