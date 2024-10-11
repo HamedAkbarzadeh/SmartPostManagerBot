@@ -31,16 +31,16 @@ if (strpos($telegramApi->getText(), '/start') === 0) {
     }
     $reply_markup = null;
     if ($user['is_admin'] == 1) {
-        $text = "در این بخش هم میتوانید پستی ارسال نمایید و هم میتوانید پستی را برای ارسال به کانال انتخاب نمایید .";
+        $text = "در این بخش هم می  نمایید و هم می را برای  به کانال انتخاب نمایید .";
         $reply_markup = [
             'keyboard' => [
                 [
-                    ['text' => 'sendPost_1'],
-                    ['text' => 'sendPost_2']
+                    ['text' => 'ارسال پست 1'],
+                    ['text' => 'ارسال پست 2']
                 ],
                 [
-                    ['text' => 'sendPost_3'],
-                    ['text' => 'sendPost_5']
+                    ['text' => 'ارسال پست 3'],
+                    ['text' => 'ارسال پست 5']
                 ]
             ],
         ];

@@ -1,6 +1,6 @@
 <?php
-if (strpos($telegramApi->getText(), 'sendPost_') === 0) {
-    $postsCount = explode('_', $telegramApi->getText())[1];
+if (strpos($telegramApi->getText(), 'ارسال پست') === 0) {
+    $postsCount = explode(' ', $telegramApi->getText())[2];
     $proxies = $sql->table('proxies')->select()->where('status', 0)->orderBy('id')->limit($postsCount)->get();
 
     if (count($proxies) > 0) {
