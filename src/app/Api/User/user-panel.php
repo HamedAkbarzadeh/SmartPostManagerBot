@@ -35,27 +35,18 @@ if (strpos($telegramApi->getText(), '/start') === 0) {
         $reply_markup = [
             'keyboard' => [
                 [
-                    [
-                        'text' => 'ارسال 1 پست',
-                        'callback_data' => 'sendPost_1',
-                    ],
-                    [
-                        'text' => 'ارسال 2 پست',
-                        'callback_data' => 'sendPost_2',
-                    ]
+                    ['text' => 'sendPost_1'],
+                    ['text' => 'sendPost_2']
                 ],
                 [
-                    [
-                        'text' => 'ارسال 3 پست',
-                        'callback_data' => 'sendPost_3',
-                    ],
-                    [
-                        'text' => 'ارسال 5 پست',
-                        'callback_data' => 'sendPost_5',
-                    ]
+                    ['text' => 'sendPost_3'],
+                    ['text' => 'sendPost_5']
                 ]
-            ]
+            ],
+            'resize_keyboard' => true,
+            'one_time_keyboard' => true
         ];
+
     } else {
         $text = "به ربات " . BOT_NAME . " خوش آمدید . جهت ورود به کانال به لینک زیر مراجعه نمایید" . PHP_EOL . CHANNEL_USERNAME;
     }
