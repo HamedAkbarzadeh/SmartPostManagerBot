@@ -6,23 +6,21 @@ if (strpos($telegramApi->getText(), 'sendPost_') === 0) {
     if (count($proxies) > 0) {
 
         foreach ($proxies as $proxy) {
+            $title = "💯  پروکسی پر سرعت و ضد فیلتر  ♨️";
+            $footer = "✅  لطفا پروکسی هارو برای دوستاتون ارسال کنید تا از پروکسی های رایگان و پرسرعت ما استفاده کنند .";
+            $footer2 = "✳️  ری اکشن یادتون نره ";
+            $channelLink = "🆔 @PHarseProxy 🫧";
+            $link = $proxy["link"];
+            // $text = "*$title*" . PHP_EOL . "[".$proxy["link"]."](".$proxy["link"].")" . PHP_EOL . ">$footer" . PHP_EOL . "$channelLink";
+            $text = "<b>$title</b>\n$link\n$footer\n\n$footer2\n$channelLink";
+            $telegramApi->sendMessage($text, null, CHANNEL_ID, null, "HTML");
 
-            $text = "💯  پروکسی پر سرعت و ضد فیلتر  ♨️
-            " . $proxy["link"] . "
-            
-            ✅  لطفا پروکسی هارو برای دوستاتون ارسال کنید تا از پروکسی های رایگان و پرسرعت ما استفاده کنند.
-            ✳️  ری اکشن یادتون نره
-            
-            🆔 @PHarseProxy 🫧";
-            $telegramApi->sendMessage($text, null, CHANNEL_ID, null);
-           
             $timestmp = time();
-            $sql->table('proxies')->where('id', $proxy['id'])->update(['status', 'used_at'], [1, date("Y-m-d H:i:s", $timestmp)]);
+            $sql->table('proxies')->where('id', $proxy['id'])->delete();
         }
-        $text = "تعداد ". count($proxies) ." ارسال شد";
+        $text = "تعداد " . count($proxies) . " عدد پست ارسال شد";
 
         $telegramApi->sendMessage($text, null, null, null, "MarkdownV2");
-
     } else {
         $text = "هیچ پست فعالی برای ارسال موجود نیست .";
         $telegramApi->sendMessage($text);
