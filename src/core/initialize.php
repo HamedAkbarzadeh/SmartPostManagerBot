@@ -3,35 +3,35 @@
 namespace src\core;
 
 if (!defined("TOKEN")) {
-    define("TOKEN", '7775020157:AAF4xz9z8fDqCDPyrGPiGOt7XhZ-4dZhH9c');
+    define("TOKEN", '');
 }
 if (!defined("DOMAIN")) {
     define('DOMAIN', '');
 }
 if (!defined("BOT_NAME")) {
-    define('BOT_NAME', 'PHarse Proxy');
+    define('BOT_NAME', '');
 }
 if (!defined('CHANNEL_ID')) {
-    define('CHANNEL_ID', "-1002300025191");
+    define('CHANNEL_ID', "");
 }
 if (!defined("CHANNEL_USERNAME")) {
-    define('CHANNEL_USERNAME', "https://t.me/PharseProxy");
+    define('CHANNEL_USERNAME', "");
 }
 if (!defined('API')) {
     define('API', "https://api.telegram.org/bot" . TOKEN . "/");
 }
 if (!defined('BOT_USERNAME')) {
-    define('BOT_USERNAME', 'https://t.me/pharseProxyBot');
+    define('BOT_USERNAME', '');
 }
 //DB Config
 if (!defined('DB_NAME')) {
-    define('DB_NAME', 'moblekho_proxydb');
+    define('DB_NAME', '');
 }
 if (!defined('DB_USERNAME')) {
-    define('DB_USERNAME', 'moblekho_hmd');
+    define('DB_USERNAME', '');
 }
 if (!defined('DB_PASSWORD')) {
-    define('DB_PASSWORD', 'W!(ji}H(V$!e');
+    define('DB_PASSWORD', '');
 }
 if (!defined('DB_HOST')) {
     define('DB_HOST', 'localhost');
