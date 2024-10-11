@@ -235,9 +235,11 @@ class DB
     {
         try {
             if (!empty($this->values)) {
-                $fullSql = $this->sql . " " . $this->orderByProperty;
+                $fullSql = $this->sql;
                 if ($this->wheres != "") {
-                    $fullSql .= " WHERE " . $this->wheres . " " . $this->limit;;
+                    $fullSql .= " WHERE " . $this->wheres  . " " . $this->orderByProperty . " " . $this->limit;;
+                } else {
+                    $fullSql .= " " . $this->orderByProperty . " " . $this->limit;;
                 }
                 $stmt = DBConnection::getInstance()->prepare($fullSql);
                 $stmt->execute($this->values);
