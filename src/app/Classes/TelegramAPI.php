@@ -33,6 +33,8 @@ class TelegramAPI
     public $is_permium;
     public $entities;
     public $invite_link;
+    public $caption_entities;
+
     public function __construct()
     {
         $this->client = new Guzzle;
@@ -67,6 +69,7 @@ class TelegramAPI
             $this->file_type = $this->response['message']['vdieo']['mime_type'] ?? null;
             $this->animation_id = $this->response['message']['animation']['file_id'] ?? null;
             $this->caption = $this->response['message']['caption'] ?? null;
+            $this->caption_entities = $this->response['message']['caption_entities'] ?? null;
         } elseif (array_key_exists('callback_query', $this->response)) {
             $this->callback_id = $this->response['callback_query']['id'] ?? null;
             $this->user_id = $this->response['callback_query']['from']['id'] ?? null;
@@ -155,6 +158,10 @@ class TelegramAPI
     public function getCaption()
     {
         return $this->caption;
+    }
+    public function getCaption_entities()
+    {
+        return $this->caption_entities;
     }
 
 

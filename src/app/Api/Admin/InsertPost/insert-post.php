@@ -1,6 +1,15 @@
 <?php
 
 preg_match_all("/https:\/\/t\.me\/proxy[^\s)]+/", $telegramApi->getText(), $matches);
+
+if (isset($telegramApi->getCaption_entities()[0])) {
+    foreach ($telegramApi->getCaption_entities() as $entitie) {
+        if ($entitie['type'] == 'text_link') {
+            $matches[0][] = $entitie['url'];
+        }
+    }
+}
+
 if (isset($telegramApi->getEntities()[0])) {
     foreach ($telegramApi->getEntities() as $entitie) {
         if ($entitie['type'] == 'text_link') {
