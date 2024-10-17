@@ -17,8 +17,7 @@ if (strpos($telegramApi->getText(), 'ارسال پست') === 0) {
             $timestmp = time();
             $sql->table('proxies')->where('id', $proxy['id'])->delete();
         }
-        $text = "تعداد " . count($proxies) . " عدد پست ارسال شد";
-        $text .= "/nتعداد پست های فعال باقی مانده : ". count($proxies) - $postsCount;
+        $text = "تعداد " . count($proxies) . " عدد پست ارسال شد \n تعداد پست های آماده ارسال   : " . $sql->table('proxies')->select('COUNT(*)')->where('status', 0)->get()[0]['COUNT(*)'];
 
         $telegramApi->sendMessage($text, null, null, null, "MarkdownV2");
     } else {
