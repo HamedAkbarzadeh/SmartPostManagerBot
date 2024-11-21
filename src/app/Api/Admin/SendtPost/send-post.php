@@ -72,7 +72,7 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
 
         $channelLink = "🆔 @PHarseProxy 🫧";
         $textMessage = "$text\n\n$strProxies\n\n$channelLink";
-
+        $robotChatID = $telegramApi->getChat_id();
         switch ($file_type) {
             case 'photo':
                 $response = $telegramApi->sendPhoto($file_id, $textMessage, null, CHANNEL_ID, "HTML");
@@ -91,8 +91,7 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
                 break;
         }
     }
-    $txt = "پست شما با موفقیت با تعداد $proxyCount پروکسی ارسال شد .";
-    $txt .= PHP_EOL . PHP_EOL . "تعداد پروکسی آماده ارسال : " . $sql->table('proxies')->select('COUNT(*)')->where('status', 0)->get()[0]['COUNT(*)'];
-    $telegramApi->sendMessage($txt);
+    $textForRobot = "پست شما با موفقیت با تعداد $proxyCount پروکسی ارسال شد ." .PHP_EOL.PHP_EOL. "تعداد پروکسی آماده ارسال : " . $sql->table('proxies')->select('COUNT(*)')->where('status', 0)->get()[0]['COUNT(*)'];
+    $telegramApi->sendMessage($textForRobot, null, $robotChatID, null, null);
 
 }
