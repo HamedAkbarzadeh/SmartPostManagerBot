@@ -44,6 +44,7 @@ if (strpos($telegramApi->getText(), "send custom post") === 0) {
 
 //2) send message to channel
 if (strpos($user['step'], "send-post-custom-") === 0) {
+    $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["sended-post-custom-$proxyCount-to-channel"]);
 
     //get proxy from db
     $proxyCount = explode('-', $userStep)[3];
@@ -56,7 +57,6 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
             $strProxies .= "<a href='$link'>پروکسی $linkNumber </a>";
         }
     }
-
     if ($telegramApi->getCaption() != null) {
         $text = $telegramApi->getCaption();
     } elseif ($telegramApi->getText() != null) {
@@ -92,6 +92,7 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
         }
     }
     $txt = "پست شما با موفقیت با تعداد $proxyCount پروکسی ارسال شد .";
+    $txt .= PHP_EOL . PHP_EOL . "تعداد پروکسی آماده ارسال : " . $sql->table('proxies')->select('COUNT(*)')->where('status', 0)->get()[0]['COUNT(*)'];
     $telegramApi->sendMessage($txt);
 
 }
