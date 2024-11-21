@@ -3,7 +3,6 @@
 if (strpos($telegramApi->getText(), '/start') === 0) {
     $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ['home']);
 
-
     if (!$user) {
 
         $userID = $sql->table('users')->insert(
@@ -35,13 +34,29 @@ if (strpos($telegramApi->getText(), '/start') === 0) {
         $reply_markup = [
             'keyboard' => [
                 [
+                    [
+                        'text' => 'send custom post 1',
+                    ],
+                    [
+                        'text' => 'send custom post 3',
+                    ],
+                ],
+                [
+                    [
+                        'text' => 'send custom post 6',
+                    ],
+                    [
+                        'text' => 'send custom post 8',
+                    ],
+                ],
+                [
                     ['text' => 'ارسال پست 1'],
-                    ['text' => 'ارسال پست 2']
+                    ['text' => 'ارسال پست 2'],
                 ],
                 [
                     ['text' => 'ارسال پست 3'],
-                    ['text' => 'ارسال پست 5']
-                ]
+                    ['text' => 'ارسال پست 5'],
+                ],
             ],
         ];
     } else {

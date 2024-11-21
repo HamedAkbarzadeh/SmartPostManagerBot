@@ -18,6 +18,8 @@ if (isset($telegramApi->getEntities()[0])) {
     }
 }
 if ($matches[0]) {
+    $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["insert-post"]);
+
     foreach ($matches[0] as $link) {
         $queries = $explodes = explode("&", explode("?", $link)[1]);
         $server = explode("=", $queries[0])[1] ?? null;
