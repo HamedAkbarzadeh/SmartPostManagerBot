@@ -35,7 +35,7 @@ if (strpos($telegramApi->getText(), 'ارسال پست') === 0) {
 
 //1) send message
 if (strpos($telegramApi->getText(), "send custom post") === 0) {
-    $proxyCount = explode(' ', $userStep)[3];
+    $proxyCount = explode(' ', $telegramApi->getText())[3] ?? 0;
 
     $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["send-post-custom-$proxyCount"]);
     $text = "پست خود را ارسال نمایید (شامل عکس یا ویدیو و...)";
@@ -92,6 +92,6 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
         }
     }
     $txt = "پست شما با موفقیت با تعداد $proxyCount پروکسی ارسال شد .";
-    $telegramApi->sendMessage($textMessage);
+    $telegramApi->sendMessage($txt);
 
 }

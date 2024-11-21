@@ -59,15 +59,16 @@ class TelegramAPI
             if (isset($this->response['message']['photo'])) {
                 $this->file_id = end($this->response['message']['photo'])['file_id'] ?? null;
                 $this->file_size = end($this->response['message']['photo'])['file_size'] ?? null;
+                $this->file_type = "photo";
             } else {
                 $this->file_id = null;
             }
 
-            $this->audio_id = $this->response['message']['audio']['file_id'] ?? null;
-            $this->video_id = $this->response['message']['video']['file_id'] ?? null;
+            $this->file_id = $this->response['message']['audio']['file_id'] ?? null;
+            $this->file_id = $this->response['message']['video']['file_id'] ?? null;
             $this->file_size = $this->response['message']['vdieo']['file_size'] ?? null;
             $this->file_type = $this->response['message']['vdieo']['mime_type'] ?? null;
-            $this->animation_id = $this->response['message']['animation']['file_id'] ?? null;
+            $this->file_id = $this->response['message']['animation']['file_id'] ?? null;
             $this->caption = $this->response['message']['caption'] ?? null;
             $this->caption_entities = $this->response['message']['caption_entities'] ?? null;
         } elseif (array_key_exists('callback_query', $this->response)) {
