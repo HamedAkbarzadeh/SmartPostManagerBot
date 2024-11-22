@@ -55,6 +55,7 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
             $link = $value['link'];
             $linkNumber = $key + 1;
             $strProxies .= "<a href='$link'>پروکسی $linkNumber </a>";
+            $sql->table('proxies')->where('id', $proxy['id'])->delete();
         }
     }
     if ($telegramApi->getCaption() != null) {
@@ -65,7 +66,6 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
 
     $media_group_id = $telegramApi->getMedia_group_id();
     if (isset($media_group_id)) {
-
     } else {
         $file_type = $telegramApi->getFile_type();
         $file_id = $telegramApi->getFile_id();
@@ -91,7 +91,6 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
                 break;
         }
     }
-    $textForRobot = "پست شما با موفقیت با تعداد $proxyCount پروکسی ارسال شد ." .PHP_EOL.PHP_EOL. "تعداد پروکسی آماده ارسال : " . $sql->table('proxies')->select('COUNT(*)')->where('status', 0)->get()[0]['COUNT(*)'];
+    $textForRobot = "پست شما با موفقیت با تعداد $proxyCount پروکسی ارسال شد ." . PHP_EOL . PHP_EOL . "تعداد پروکسی آماده ارسال : " . $sql->table('proxies')->select('COUNT(*)')->where('status', 0)->get()[0]['COUNT(*)'];
     $telegramApi->sendMessage($textForRobot, null, $robotChatID, null, null);
-
 }
