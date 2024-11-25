@@ -82,6 +82,9 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
             case 'video':
                 $response = $telegramApi->sendVideo($file_id, $textMessage, null, CHANNEL_ID, "HTML");
                 break;
+            case 'audio':
+                $response = $telegramApi->sendAudio($file_id, $textMessage, null, CHANNEL_ID, "HTML");
+                break;
             case 'message':
                 $response = $telegramApi->sendMessage($textMessage, null, CHANNEL_ID, null, "HTML");
                 break;
