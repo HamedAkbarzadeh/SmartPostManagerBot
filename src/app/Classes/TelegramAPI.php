@@ -68,8 +68,8 @@ class TelegramAPI
 
             $this->audio_id = $this->response['message']['audio']['file_id'] ?? null;
             $this->video_id = $this->response['message']['video']['file_id'] ?? null;
-            $this->video_file_size = $this->response['message']['vdieo']['file_size'] ?? null;
-            $this->video_file_type = $this->response['message']['vdieo']['mime_type'] ?? null;
+            $this->video_file_size = $this->response['message']['video']['file_size'] ?? null;
+            $this->video_file_type = $this->response['message']['video']['mime_type'] ?? null;
             $this->animation_id = $this->response['message']['animation']['file_id'] ?? null;
             $this->caption = $this->response['message']['caption'] ?? null;
             $this->caption_entities = $this->response['message']['caption_entities'] ?? null;
@@ -154,6 +154,7 @@ class TelegramAPI
         } else if (isset($this->file_type)) {
             return $this->file_type;
         }
+        return null;
     }
 
     public function getMedia_group_id()
