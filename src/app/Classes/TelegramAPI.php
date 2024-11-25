@@ -28,6 +28,7 @@ class TelegramAPI
     public $media_group_id;
     public $caption;
     public $file_size;
+    public $video_file_size;
     public $file_type;
     public $video_file_type;
 
@@ -67,7 +68,7 @@ class TelegramAPI
 
             $this->audio_id = $this->response['message']['audio']['file_id'] ?? null;
             $this->video_id = $this->response['message']['video']['file_id'] ?? null;
-            $this->file_size = $this->response['message']['vdieo']['file_size'] ?? null;
+            $this->video_file_size = $this->response['message']['vdieo']['file_size'] ?? null;
             $this->video_file_type = $this->response['message']['vdieo']['mime_type'] ?? null;
             $this->animation_id = $this->response['message']['animation']['file_id'] ?? null;
             $this->caption = $this->response['message']['caption'] ?? null;
@@ -135,32 +136,39 @@ class TelegramAPI
     //media
     public function getFile_id()
     {
-        return $this->file_id;
-    }
-    public function getAudio_id()
-    {
-        return $this->audio_id;
-    }
-    public function getVideo_id()
-    {
-        return $this->video_id;
+        if (isset($this->file_id)) {
+            return $this->file_id;
+        } else if (isset($this->audio_id)) {
+            return $this->audio_id;
+        } else if (isset($this->video_id)) {
+            return $this->video_id;
+        } else if (isset($this->animation_id)) {
+            return $this->animation_id;
+        }
+        return null;
     }
     public function getFile_type()
     {
-        return $this->file_type;
+        if (isset($this->video_file_type)) {
+            return $this->video_file_type;
+        } else if (isset($this->file_type)) {
+            return $this->file_type;
+        }
     }
-    public function getAnimation_id()
-    {
-        return $this->animation_id;
-    }
+
     public function getMedia_group_id()
     {
         return $this->media_group_id;
     }
     public function getFile_size()
     {
-        return $this->file_size;
+        if (isset($this->video_file_size)) {
+            return $this->video_file_size;
+        } else if (isset($this->file_size)) {
+            return $this->file_size;
+        }
     }
+
     public function getCaption()
     {
         return $this->caption;

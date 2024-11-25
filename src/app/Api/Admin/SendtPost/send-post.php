@@ -55,9 +55,10 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
             $link = $value['link'];
             $linkNumber = $key + 1;
             $strProxies .= "<a href='$link'>پروکسی $linkNumber </a>";
-            $sql->table('proxies')->where('id', $proxy['id'])->delete();
+            $sql->table('proxies')->where('id', $value['id'])->delete();
         }
     }
+    //send media
     if ($telegramApi->getCaption() != null) {
         $text = $telegramApi->getCaption();
     } elseif ($telegramApi->getText() != null) {
@@ -67,7 +68,8 @@ if (strpos($user['step'], "send-post-custom-") === 0) {
     $media_group_id = $telegramApi->getMedia_group_id();
     if (isset($media_group_id)) {
     } else {
-        $file_type = $telegramApi->getFile_type();
+
+        $file_type = explode('/', $telegramApi->getFile_type())[0];
         $file_id = $telegramApi->getFile_id();
 
         $channelLink = "🆔 @PHarseProxy 🫧";
