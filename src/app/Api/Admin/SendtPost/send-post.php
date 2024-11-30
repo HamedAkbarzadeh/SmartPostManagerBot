@@ -39,11 +39,25 @@ if (strpos($telegramApi->getText(), "send custom post") === 0) {
 
     $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["send-post-custom-$proxyCount"]);
     $text = "پست خود را ارسال نمایید (شامل عکس یا ویدیو و...)";
-    $telegramApi->sendMessage($text);
+    $reply_markup = [
+        'inline_keyboard' => [
+            [
+                [
+                    'text' => 'کنسل کردن',
+                    'data' => 'cancel_send_post'
+                ]
+            ]
+        ]
+    ];
+    $telegramApi->sendMessage($text, $reply_markup);
 }
 
 //2) send message to channel
 if (strpos($user['step'], "send-post-custom-") === 0) {
+    if ($telegramApi->getText() == "cancel_send_post") {
+        $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["cancel_send_post"]);
+        exit(22);
+    }
     $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["sended-post-custom-$proxyCount-to-channel"]);
 
     //get proxy from db
