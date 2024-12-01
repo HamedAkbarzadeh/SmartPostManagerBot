@@ -35,6 +35,11 @@ if (strpos($telegramApi->getText(), '/start') === 0) {
             'keyboard' => [
                 [
                     [
+                        'text' => 'send forward media',
+                    ]  
+                ],
+                [
+                    [
                         'text' => 'send custom post 1',
                     ],
                     [
