@@ -44,7 +44,7 @@ if (strpos($telegramApi->getText(), "send custom post") === 0) {
             [
                 [
                     'text' => 'کنسل کردن',
-                    'data' => 'cancel_send_post'
+                    'callback_data' => 'cancel_send_post'
                 ]
             ]
         ]
