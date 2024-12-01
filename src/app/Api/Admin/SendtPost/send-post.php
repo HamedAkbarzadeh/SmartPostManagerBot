@@ -148,7 +148,7 @@ if ($telegramApi->getText() == "send forward media") {
     $text = "تعداد پروکسی هایی که میخواهید همراه پست ارسال شود را ارسال نمایید .";
     $telegramApi->sendMessage($text, $reply_markup);
 }
-if ($step == "choose_proxy_count_send_forward_media") {
+if (strpos($telegramApi->getText(), "proxies_count_for_send_forward_media_") === 0) {
     $proxyCount = end(explode("_", $telegramApi->getText()));
     $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["send_forward_media_with_proxies_$proxyCount"]);
 
@@ -200,88 +200,6 @@ if (strpos($userStep, 'choose_caption_or_no_for_send_forward_media_proxy_count_'
         sendMediaWithProxies($telegramApi->getText(), $proxyCount);
     }
 }
-
-
-
-
-
-
-
-// if ($telegramApi->getText() == "send forward media") {
-//     $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["send_forward_media"]);
-//     $text = "لطفا فایل خود را که میخواهید فوروارد کنید رو ارسال کنید .";
-//     $reply_markup = [
-//         'inline_keyboard' => [
-//             [
-//                 [
-//                     'text' => "کنسل کردن",
-//                     'callback_data' => 'cancel_send_post'
-//                 ]
-//             ]
-//         ]
-//     ];
-//     $telegramApi->sendMessage($text, $reply_markup);
-// }
-// if ($userStep == 'send_forward_media') {
-//     checkCencel();
-//     $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["choose_caption_or_no_for_send_forward_media"]);
-
-//     $text = "اگر میخواهید کپشن اضافه کنید لطفا کپشن مورد نظر خودتون رو ارسال نمایید . در غیر این صورت یکی از دکمه های زیر را انتخاب نمایید .";
-//     $reply_markup = [
-//         "inline_keyboard" => [
-//             [
-//                 [
-//                     'text' => 'بدون کپشن',
-//                     'callback_data' => "send_without_caption",
-//                 ],
-//                 [
-//                     'text' => 'cancel',
-//                     'callback_data' => 'cancel_send_post'
-//                 ]
-//             ]
-//         ]
-//     ];
-//     $telegramApi->sendMessage($text, $reply_markup);
-// }
-// if ($step == "choose_caption_or_no_for_send_forward_media") {
-//     checkCencel();
-//     $text = "تعداد پروکسی که همراه پست ارسال بشود را انتخاب نمایید .";
-//     $reply_markup = [
-//         'inline_keyboard' => [
-//             [
-//                 [
-//                     'text' => "0",
-//                     'callback_data' => "proxies_count_for_send_forward_media_0"
-//                 ],
-//                 [
-//                     'text' => "1",
-//                     'callback_data' => "proxies_count_for_send_forward_media_1"
-//                 ],
-//             ],
-//             [
-//                 [
-//                     'text' => "3",
-//                     'callback_data' => "proxies_count_for_send_forward_media_3"
-//                 ],
-//                 [
-//                     'text' => "6",
-//                     'callback_data' => "proxies_count_for_send_forward_media_6"
-//                 ],
-//             ]
-//         ]
-//     ];
-//     if ($telegramApi->getText() == "send_without_caption") {
-
-//         sendMediaWithProxies();
-//     } else {
-
-//         sendMediaWithProxies($telegramApi->getText());
-//     }
-// }
-// if(strpos($telegramApi->getText(),"proxies_count_for_send_forward_media_") === 0) {
-//     $proxyCount = end(explode("_",$telegramApi->getText()));
-
-// }
 
 
 
