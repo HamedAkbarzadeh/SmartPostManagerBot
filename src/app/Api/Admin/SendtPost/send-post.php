@@ -150,6 +150,7 @@ if ($telegramApi->getText() == "send forward media") {
 }
 if (strpos($telegramApi->getText(), "proxies_count_for_send_forward_media_") === 0) {
     $proxyCount = end(explode("_", $telegramApi->getText()));
+
     $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["send_forward_media_with_proxies_$proxyCount"]);
 
     $text = "لطفا فایل خود را که میخواهید فوروارد کنید رو ارسال کنید .";
@@ -169,19 +170,28 @@ if (strpos($telegramApi->getText(), "proxies_count_for_send_forward_media_") ===
 if (strpos($userStep, "send_forward_media_with_proxies_") === 0) {
     checkCencel();
     $proxyCount = end(explode("_", $userStep));
-    $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["choose_caption_or_no_for_send_forward_media_proxy_count_$proxyCount"]);
+    //insert media to db
+    $file_id = $telegramApi->getFile_id();
+    $file_type = $telegramApi->getFile_type();
+    $file_size = $telegramApi->getFile_size();
+
+
+    $post_id = $sql->table("files")->insert(
+        ['file_id', 'proxy_count', 'file_type', 'file_size'],
+        [$file_id, $proxyCount, $file_type, $file_size]
+    );
+
+    $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["choose_caption_or_no_for_send_forward_media_for_post_id_$post_id"]);
 
     $text = "اگر میخواهید کپشن اضافه کنید لطفا کپشن مورد نظر خودتون رو ارسال نمایید . در غیر این صورت یکی از دکمه های زیر را انتخاب نمایید .";
 
-    $file_id = $telegramApi->getFile_id();
-    $file_type = $telegramApi->getFile_type();
 
     $reply_markup = [
         "inline_keyboard" => [
             [
                 [
                     'text' => 'بدون کپشن',
-                    'callback_data' => "send_without_caption_$file_id" . "///" . "$file_type",
+                    'callback_data' => "send_without_caption",
                 ],
                 [
                     'text' => 'cancel',
@@ -193,29 +203,35 @@ if (strpos($userStep, "send_forward_media_with_proxies_") === 0) {
     $telegramApi->sendMessage($text, $reply_markup);
 }
 
-if (strpos($userStep, 'choose_caption_or_no_for_send_forward_media_proxy_count_') === 0) {
+if (strpos($userStep, 'choose_caption_or_no_for_send_forward_media_for_post_id_') === 0) {
     checkCencel();
-    $proxyCount = end(explode('_', $userStep));
-    $textInfo = end(explode('_', $telegramApi->getText()));
-    $file_id = explode('///', $textInfo)[0];
-    $file_type = explode('///', $textInfo)[1];
+    $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["sended_forward_post_to_channel"]);
+
+    $post_id = end(explode('_', $userStep));
 
 
-    if ($telegramApi->getText() == "send_without_caption") {
-        sendMediaWithProxies(null, null, null, $proxyCount);
-    } else {
-        sendMediaWithProxies($telegramApi->getText(), $file_id, $file_id, $proxyCount);
+    setManualLog("File_id : $file_id , File_type : $file_type , File_size : $file_size");
+    if ($telegramApi->getText() != "send_without_caption") {
+        $caption = $telegramApi->getText();
+        $sql->table('files')->where('id', $post_id)->update(['caption'], [$caption]);
     }
+    sendMediaWithProxies($post_id);
 }
 
 
 
-function sendMediaWithProxies($caption = null, $file_id, $file_type, $proxyCount = 0)
+function sendMediaWithProxies($post_id)
 {
     global $telegramApi;
     global $sql;
 
-
+    $post = $sql->table('files')->select()->where('id', $post_id)->first();
+    $file_id = $post['file_id'];
+    $caption = $post['caption'];
+    $file_type = $post['file_type'];
+    $media_group_id = $post['media_group_id'];
+    $proxyCount = $post['proxy_count'];
+    $file_size = $post['file_size'];
 
 
     //get proxy from db
@@ -237,11 +253,10 @@ function sendMediaWithProxies($caption = null, $file_id, $file_type, $proxyCount
         $text = "";
     }
 
-    $media_group_id = $telegramApi->getMedia_group_id();
     if (isset($media_group_id)) {
     } else {
 
-
+        setManualLog("omad to ");
         $channelLink = "🆔 @PHarseProxy 🫧";
         $textMessage = "$text\n\n$strProxies\n\n$channelLink";
         $robotChatID = $telegramApi->getChat_id();
