@@ -210,7 +210,6 @@ if (strpos($userStep, 'choose_caption_or_no_for_send_forward_media_for_post_id_'
     $post_id = end(explode('_', $userStep));
 
 
-    setManualLog("File_id : $file_id , File_type : $file_type , File_size : $file_size");
     if ($telegramApi->getText() != "send_without_caption") {
         $caption = $telegramApi->getText();
         $sql->table('files')->where('id', $post_id)->update(['caption'], [$caption]);
@@ -256,7 +255,6 @@ function sendMediaWithProxies($post_id)
     if (isset($media_group_id)) {
     } else {
 
-        setManualLog("omad to ");
         $channelLink = "🆔 @PHarseProxy 🫧";
         $textMessage = "$text\n\n$strProxies\n\n$channelLink";
         $robotChatID = $telegramApi->getChat_id();
@@ -291,6 +289,7 @@ function checkCencel()
     global $sql;
     if ($telegramApi->getText() == "cancel_send_post") {
         $sql->table('users')->where('user_id', $telegramApi->getUser_id())->update(['step'], ["cancel_send_post"]);
+        $telegramApi->sendMessage("عملیات کنسل شد .");
         exit(22);
     }
 }
